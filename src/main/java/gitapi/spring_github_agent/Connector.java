@@ -1,17 +1,19 @@
 package gitapi.spring_github_agent;
 import org.kohsuke.github.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 
+@Service
 public class Connector {
+    String token="7c501c8695faa5e067c8754faeff797706fb8710";
     private static int numOfRepos;
-
     public Metrics metrics[];
-    public Connector() throws IOException {
-        String token="7c501c8695faa5e067c8754faeff797706fb8710";
+    public void connect() throws IOException {
+
         GitHub gitHub=connect(token);
         ArrayList repositories=getRepositories(gitHub);
         setNumOfRepos(repositories.size());
@@ -25,17 +27,30 @@ public class Connector {
 
     }
 
+    @Autowired
+    private CommitterService committerService;
+
+    @Autowired
+    public CommitService commitService;
+
     public static void initializeMetrics(Metrics[] metrics){
         for (int i=0;i<getNumOfRepos();i++){
             metrics[i]=new Metrics();
         }
     }
 
-    public static void setCommits(Metrics[] metrics,ArrayList<GHRepository> repositories){
+    public void setCommits(Metrics[] metrics,ArrayList<GHRepository> repositories) throws IOException {
         for(int i=0;i<getNumOfRepos();++i){
             metrics[i].setCommits(getCommits(repositories.get(i)));
+            for(int j=0;j<metrics[i].getCommits().size();j++){
+                Commit commit=new Commit(metrics[i].getCommit(j));
+                Committer committer=new Committer(metrics[i].getCommit(j).getCommitShortInfo());
+                committerService.createCommitter(committer);
+                commitService.createCommit(commit);
+            }
         }
     }
+
 
     public static ArrayList getCommits(GHRepository repository){
         ArrayList<GHCommit> commits;

@@ -13,30 +13,21 @@ import java.util.Date;
 @EnableAutoConfiguration
 @Entity
 @Table
-public class Author {
-    public Author(GHCommit.ShortInfo commit){
+public class Committer {
+    public Committer(GHCommit.ShortInfo commit){
         date=commit.getCommitDate();
         name=commit.getAuthor().getName();
         email=commit.getAuthor().getEmail();
+        message=commit.getMessage();
     }
-    public Author(){ }
+    public Committer(){ }
     @Column
     public Date date;
+    @Column
+    public String message;
     @Column
     public String name;
     @Id
     @Column
     public String email;
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

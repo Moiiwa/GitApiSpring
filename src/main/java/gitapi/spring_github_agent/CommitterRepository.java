@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.Date;
 import java.util.List;
-public interface AuthorRepository extends JpaRepository<Author,Long> {
-    @Query(value = "select * from Author ",nativeQuery = true)
-    List<Author> findAllAuthors();
+public interface CommitterRepository extends JpaRepository<Committer,Long> {
+    @Query(value = "select * from Committer ",nativeQuery = true)
+    List<Committer> findAllAuthors();
 }
