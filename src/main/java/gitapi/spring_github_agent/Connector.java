@@ -43,6 +43,7 @@ public class Connector {
         for(int i=0;i<getNumOfRepos();++i){
             metrics[i].setCommits(getCommits(repositories.get(i)));
             for(int j=0;j<metrics[i].getCommits().size();j++){
+
                 Commit commit=new Commit(metrics[i].getCommit(j));
                 Committer committer=new Committer(metrics[i].getCommit(j).getCommitShortInfo());
                 committerService.createCommitter(committer);

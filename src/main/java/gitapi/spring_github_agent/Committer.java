@@ -21,13 +21,14 @@ public class Committer {
         message=commit.getMessage();
     }
     public Committer(){ }
+    @Id
     @Column
     public Date date;
     @Column
     public String message;
     @Column
     public String name;
-    @Id
+
     @Column
     public String email;
 }
