@@ -4,14 +4,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @org.springframework.stereotype.Service
 public class CommitService {
+
     @Autowired
     public CommitterService committerService;
+
     @Autowired
-    public final CommitsRepository commitsRepository;
-    public CommitService(CommitsRepository commitsRepository){
-        this.commitsRepository=commitsRepository;
-    }
-    public void createCommit(Commit commit){
+    private CommitsRepository commitsRepository;
+
+
+    public void createCommit(Commit commit,Committer committer){
+        committerService.createCommitter(committer);
+        committerService.committerRepository.save(committer);
         commitsRepository.save(commit);
     }
 }

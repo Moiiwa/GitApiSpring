@@ -28,10 +28,10 @@ public class Connector {
     }
 
     @Autowired
-    private CommitterService committerService;
+    public CommitService commitService;
 
     @Autowired
-    public CommitService commitService;
+    public IssueService issueService;
 
     public static void initializeMetrics(Metrics[] metrics){
         for (int i=0;i<getNumOfRepos();i++){
@@ -46,8 +46,7 @@ public class Connector {
 
                 Commit commit=new Commit(metrics[i].getCommit(j));
                 Committer committer=new Committer(metrics[i].getCommit(j).getCommitShortInfo());
-                committerService.createCommitter(committer);
-                commitService.createCommit(commit);
+                commitService.createCommit(commit,committer);
             }
         }
     }
@@ -65,7 +64,7 @@ public class Connector {
         return issues;
     }
 
-    public static void setIssues(Metrics[] metrics,ArrayList<GHRepository> repositories) throws IOException {
+    public void setIssueEvents(Metrics[] metrics,ArrayList<GHRepository> repositories) throws IOException {
         for(int i=0;i<getNumOfRepos();++i){
             metrics[i].setIssueEvents(getIssueEvents(repositories.get(i)));
         }
@@ -78,9 +77,14 @@ public class Connector {
         return issues;
     }
 
-    public static void setIssueEvents(Metrics[] metrics,ArrayList<GHRepository> repositories) throws IOException {
+    public void setIssues(Metrics[] metrics,ArrayList<GHRepository> repositories) throws IOException {
         for(int i=0;i<getNumOfRepos();++i){
             metrics[i].setIssues(getIssues(repositories.get(i)));
+            for(int j=0;j<getIssues(repositories.get(i)).size();j++){
+                GHIssue ghIssue= (GHIssue) getIssues(repositories.get(i)).get(j);
+                Issue issue=new Issue(ghIssue);
+                issueService.createIssue(issue);
+            }
         }
     }
 
