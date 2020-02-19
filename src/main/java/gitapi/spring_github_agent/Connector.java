@@ -28,6 +28,9 @@ public class Connector {
     }
 
     @Autowired
+    public IssueEventService issueEventService;
+
+    @Autowired
     public CommitService commitService;
 
     @Autowired
@@ -67,6 +70,13 @@ public class Connector {
     public void setIssueEvents(Metrics[] metrics,ArrayList<GHRepository> repositories) throws IOException {
         for(int i=0;i<getNumOfRepos();++i){
             metrics[i].setIssueEvents(getIssueEvents(repositories.get(i)));
+            for(int j=0;j<getIssueEvents(repositories.get(i)).size();j++){
+                GHIssueEvent ghIssueEvent=(GHIssueEvent) getIssueEvents(repositories.get(i)).get(j);
+                IssueEvent issueEvent=new IssueEvent(ghIssueEvent);
+                issueEventService.createIssueEvent(issueEvent);
+                System.out.println("Ass");
+                issueEventService.issueEventRepository.findAllIssueEvents();
+            }
         }
     }
 
@@ -84,6 +94,7 @@ public class Connector {
                 GHIssue ghIssue= (GHIssue) getIssues(repositories.get(i)).get(j);
                 Issue issue=new Issue(ghIssue);
                 issueService.createIssue(issue);
+
             }
         }
     }
