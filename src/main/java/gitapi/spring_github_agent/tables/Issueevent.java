@@ -1,4 +1,4 @@
-package gitapi.spring_github_agent;
+package gitapi.spring_github_agent.tables;
 
 import org.kohsuke.github.GHIssueEvent;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -12,7 +12,7 @@ import java.util.Date;
 @EnableAutoConfiguration
 @Entity
 @Table
-public class IssueEvent {
+public class Issueevent {
     @Id
     @Column
     Long id;
@@ -25,12 +25,12 @@ public class IssueEvent {
     @Column
     String issueHtml;
 
-    public IssueEvent(GHIssueEvent event){
+    public Issueevent(GHIssueEvent event){
         this.id=event.getId();
         createdAt=event.getCreatedAt();
         this.event=event.getEvent();
         userLogin=event.getActor().getLogin();
         issueHtml=event.getIssue().getHtmlUrl().toString();
     }
-    public IssueEvent(){}
+    public Issueevent(){}
 }

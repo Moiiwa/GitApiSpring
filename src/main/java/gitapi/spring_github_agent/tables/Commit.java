@@ -1,11 +1,10 @@
-package gitapi.spring_github_agent;
+package gitapi.spring_github_agent.tables;
 
 import org.kohsuke.github.GHCommit;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 
 import javax.persistence.*;
 import java.io.IOException;
-import java.sql.Array;
 import java.util.List;
 @EnableAutoConfiguration
 @Entity

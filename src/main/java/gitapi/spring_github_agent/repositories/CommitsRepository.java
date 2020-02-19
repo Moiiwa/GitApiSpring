@@ -1,9 +1,9 @@
-package gitapi.spring_github_agent;
+package gitapi.spring_github_agent.repositories;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import gitapi.spring_github_agent.tables.Commit;
+import gitapi.spring_github_agent.tables.Committer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 

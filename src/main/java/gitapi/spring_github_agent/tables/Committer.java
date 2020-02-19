@@ -1,4 +1,4 @@
-package gitapi.spring_github_agent;
+package gitapi.spring_github_agent.tables;
 
 import org.kohsuke.github.GHCommit;
 import org.springframework.beans.factory.annotation.Autowired;

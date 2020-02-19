@@ -1,4 +1,4 @@
-package gitapi.spring_github_agent;
+package gitapi.spring_github_agent.tables;
 
 import org.kohsuke.github.GHIssue;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;

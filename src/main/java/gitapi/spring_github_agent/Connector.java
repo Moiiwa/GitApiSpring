@@ -1,7 +1,13 @@
 package gitapi.spring_github_agent;
+import gitapi.spring_github_agent.services.CommitService;
+import gitapi.spring_github_agent.services.IssueEventService;
+import gitapi.spring_github_agent.services.IssueService;
+import gitapi.spring_github_agent.tables.Commit;
+import gitapi.spring_github_agent.tables.Committer;
+import gitapi.spring_github_agent.tables.Issue;
+import gitapi.spring_github_agent.tables.Issueevent;
 import org.kohsuke.github.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -72,10 +78,8 @@ public class Connector {
             metrics[i].setIssueEvents(getIssueEvents(repositories.get(i)));
             for(int j=0;j<getIssueEvents(repositories.get(i)).size();j++){
                 GHIssueEvent ghIssueEvent=(GHIssueEvent) getIssueEvents(repositories.get(i)).get(j);
-                IssueEvent issueEvent=new IssueEvent(ghIssueEvent);
-                issueEventService.createIssueEvent(issueEvent);
-                System.out.println("Ass");
-                issueEventService.issueEventRepository.findAllIssueEvents();
+                Issueevent issueevent=new Issueevent(ghIssueEvent);
+                issueEventService.createIssueEvent(issueevent);
             }
         }
     }
