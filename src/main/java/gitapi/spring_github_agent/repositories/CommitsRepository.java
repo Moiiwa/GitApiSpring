@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface CommitsRepository extends JpaRepository<Commit,Long> {
     @Query(value = "select * from Commit ",nativeQuery = true)
-    List<Committer> findAllAuthors();
+    List<Commit> findAllAuthors();
 }

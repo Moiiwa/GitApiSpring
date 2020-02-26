@@ -16,21 +16,21 @@ import java.util.Date;
 public class Issue
 {
     @Id
-    String htmlUrl;
+    public String htmlUrl;
     @Column
-    String assignee;
+    public String assignee;
     @Column
-    String state;
+    public String state;
     @Column
-    Date closedAt;
+    public Date closedAt;
     @Column
-    String body;
+    public String body;
     @Column
-    String title;
+    public String title;
     @Column
-    Date createdAt;
+    public Date createdAt;
     @Column
-    Date updatedAt;
+    public Date updatedAt;
     public Issue(GHIssue ghIssue) throws IOException {
         htmlUrl=ghIssue.getHtmlUrl().toString();
         createdAt=ghIssue.getCreatedAt();

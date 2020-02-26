@@ -15,15 +15,15 @@ import java.util.Date;
 public class Issueevent {
     @Id
     @Column
-    Long id;
+    public Long id;
     @Column
-    Date createdAt;
+    public Date createdAt;
     @Column
-    String event;
+    public String event;
     @Column
-    String userLogin;
+    public String userLogin;
     @Column
-    String issueHtml;
+    public String issueHtml;
 
     public Issueevent(GHIssueEvent event){
         this.id=event.getId();
