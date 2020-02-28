@@ -5,18 +5,21 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 
 import javax.persistence.*;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 @EnableAutoConfiguration
 @Entity
 @Table
 public class Commit {
     @Column
-    public String committerId;
+    public Date date;
+    @Column
+    public String message;
+    @Column
+    public String email;
     @Id
     @Column
     public String html_url;
-    @Column
-    public String sha;
     @Column
     public String parent1;
     @Column
@@ -24,10 +27,10 @@ public class Commit {
 
     public Commit(GHCommit commit) throws IOException {
         GHCommit.ShortInfo shortInfo=commit.getCommitShortInfo();
-        Committer committer=new Committer(shortInfo);
-        committerId=committer.email;
+        date=commit.getCommitShortInfo().getCommitDate();
+        message=commit.getCommitShortInfo().getMessage();
+        email=commit.getCommitShortInfo().getAuthor().getEmail();
         html_url=commit.getHtmlUrl().toString();
-        sha=commit.getSHA1();
         List<GHCommit> parents=commit.getParents();
         if(parents.size()==1){
             Commit parent=new Commit(parents.get(0));

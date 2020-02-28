@@ -3,7 +3,6 @@ import gitapi.spring_github_agent.services.CommitService;
 import gitapi.spring_github_agent.services.IssueEventService;
 import gitapi.spring_github_agent.services.IssueService;
 import gitapi.spring_github_agent.tables.Commit;
-import gitapi.spring_github_agent.tables.Committer;
 import gitapi.spring_github_agent.tables.Issue;
 import gitapi.spring_github_agent.tables.Issueevent;
 import org.kohsuke.github.*;
@@ -54,8 +53,7 @@ public class Connector {
             for(int j=0;j<metrics[i].getCommits().size();j++){
 
                 Commit commit=new Commit(metrics[i].getCommit(j));
-                Committer committer=new Committer(metrics[i].getCommit(j).getCommitShortInfo());
-                commitService.createCommit(commit,committer);
+                commitService.createCommit(commit);
             }
         }
     }
