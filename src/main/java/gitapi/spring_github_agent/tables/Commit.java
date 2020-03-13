@@ -12,6 +12,8 @@ import java.util.List;
 @Table
 public class Commit {
     @Column
+    public String repositoryName;
+    @Column
     public Date date;
     @Column
     public String message;
@@ -25,7 +27,8 @@ public class Commit {
     @Column
     public String parent2;
 
-    public Commit(GHCommit commit) throws IOException {
+    public Commit(GHCommit commit,String repositoryName) throws IOException {
+        this.repositoryName=repositoryName;
         GHCommit.ShortInfo shortInfo=commit.getCommitShortInfo();
         date=commit.getCommitShortInfo().getCommitDate();
         message=commit.getCommitShortInfo().getMessage();
@@ -33,13 +36,13 @@ public class Commit {
         html_url=commit.getHtmlUrl().toString();
         List<GHCommit> parents=commit.getParents();
         if(parents.size()==1){
-            Commit parent=new Commit(parents.get(0));
+            Commit parent=new Commit(parents.get(0),repositoryName);
             parent1=parent.html_url;
         }
         if(parents.size()==2){
-            Commit parent1=new Commit(parents.get(0));
+            Commit parent1=new Commit(parents.get(0),repositoryName);
             this.parent1=parent1.html_url;
-            Commit parent2=new Commit(parents.get(1));
+            Commit parent2=new Commit(parents.get(1),repositoryName);
             this.parent2=parent2.html_url;
         }
     }

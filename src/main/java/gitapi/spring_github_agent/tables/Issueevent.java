@@ -13,6 +13,8 @@ import java.util.Date;
 @Entity
 @Table
 public class Issueevent {
+    @Column
+    public String repositoryName;
     @Id
     @Column
     public Long id;
@@ -25,7 +27,8 @@ public class Issueevent {
     @Column
     public String issueHtml;
 
-    public Issueevent(GHIssueEvent event){
+    public Issueevent(GHIssueEvent event,String repositoryName){
+        this.repositoryName=repositoryName;
         this.id=event.getId();
         createdAt=event.getCreatedAt();
         this.event=event.getEvent();

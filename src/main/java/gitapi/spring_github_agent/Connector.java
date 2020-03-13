@@ -14,11 +14,18 @@ import java.util.ArrayList;
 
 @Service
 public class Connector {
-    String token="7c501c8695faa5e067c8754faeff797706fb8710";
     private static int numOfRepos;
     public Metrics metrics[];
-    public void connect() throws IOException {
+    String token;
 
+    String reponame;
+    public void connect(String token, String reponame) throws IOException {
+        this.reponame=reponame;
+        this.token=token;
+        System.out.println(reponame);
+        System.out.println(token);
+
+        //token="c12d0ed47b1b71b40db3893b023ed48333826806";
         GitHub gitHub=connect(token);
         ArrayList repositories=getRepositories(gitHub);
         setNumOfRepos(repositories.size());
@@ -48,12 +55,14 @@ public class Connector {
     }
 
     public void setCommits(Metrics[] metrics,ArrayList<GHRepository> repositories) throws IOException {
-        for(int i=0;i<getNumOfRepos();++i){
-            metrics[i].setCommits(getCommits(repositories.get(i)));
-            for(int j=0;j<metrics[i].getCommits().size();j++){
+        for(int i=0;i<getNumOfRepos();++i) {
+            if (metrics[i].getRepositoryName().equals(reponame)) {
+                metrics[i].setCommits(getCommits(repositories.get(i)));
+                for (int j = 0; j < metrics[i].getCommits().size(); j++) {
 
-                Commit commit=new Commit(metrics[i].getCommit(j));
-                commitService.createCommit(commit);
+                    Commit commit = new Commit(metrics[i].getCommit(j), reponame);
+                    commitService.createCommit(commit);
+                }
             }
         }
     }
@@ -72,12 +81,14 @@ public class Connector {
     }
 
     public void setIssueEvents(Metrics[] metrics,ArrayList<GHRepository> repositories) throws IOException {
-        for(int i=0;i<getNumOfRepos();++i){
-            metrics[i].setIssueEvents(getIssueEvents(repositories.get(i)));
-            for(int j=0;j<getIssueEvents(repositories.get(i)).size();j++){
-                GHIssueEvent ghIssueEvent=(GHIssueEvent) getIssueEvents(repositories.get(i)).get(j);
-                Issueevent issueevent=new Issueevent(ghIssueEvent);
-                issueEventService.createIssueEvent(issueevent);
+        for(int i=0;i<getNumOfRepos();++i) {
+            if (metrics[i].getRepositoryName().equals(reponame)) {
+                metrics[i].setIssueEvents(getIssueEvents(repositories.get(i)));
+                for (int j = 0; j < getIssueEvents(repositories.get(i)).size(); j++) {
+                    GHIssueEvent ghIssueEvent = (GHIssueEvent) getIssueEvents(repositories.get(i)).get(j);
+                    Issueevent issueevent = new Issueevent(ghIssueEvent,reponame);
+                    issueEventService.createIssueEvent(issueevent);
+                }
             }
         }
     }
@@ -90,13 +101,15 @@ public class Connector {
     }
 
     public void setIssues(Metrics[] metrics,ArrayList<GHRepository> repositories) throws IOException {
-        for(int i=0;i<getNumOfRepos();++i){
-            metrics[i].setIssues(getIssues(repositories.get(i)));
-            for(int j=0;j<getIssues(repositories.get(i)).size();j++){
-                GHIssue ghIssue= (GHIssue) getIssues(repositories.get(i)).get(j);
-                Issue issue=new Issue(ghIssue);
-                issueService.createIssue(issue);
+        for(int i=0;i<getNumOfRepos();++i) {
+            if (metrics[i].getRepositoryName().equals(reponame)) {
+                metrics[i].setIssues(getIssues(repositories.get(i)));
+                for (int j = 0; j < getIssues(repositories.get(i)).size(); j++) {
+                    GHIssue ghIssue = (GHIssue) getIssues(repositories.get(i)).get(j);
+                    Issue issue = new Issue(ghIssue, reponame);
+                    issueService.createIssue(issue);
 
+                }
             }
         }
     }

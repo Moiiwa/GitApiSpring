@@ -23,15 +23,19 @@ public class SpringGithubAgentApplication {
 
     @Autowired
     private Connector connector;
-
+    static String reponame;
+    static String token;
     public static void main(String[] args) throws IOException {
+        token=args[0];
+        reponame=args[1];
         SpringApplication.run(SpringGithubAgentApplication.class, args);
 
+        System.out.println(args[0]+" "+args[1]);
     }
 
     @EventListener(ApplicationReadyEvent.class)
     private void connect() throws IOException {
-        connector.connect();
+        connector.connect(token,reponame);
     }
 
 }

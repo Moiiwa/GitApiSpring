@@ -15,6 +15,8 @@ import java.util.Date;
 @Table
 public class Issue
 {
+    @Column
+    public String repositoryName;
     @Id
     public String htmlUrl;
     @Column
@@ -31,7 +33,8 @@ public class Issue
     public Date createdAt;
     @Column
     public Date updatedAt;
-    public Issue(GHIssue ghIssue) throws IOException {
+    public Issue(GHIssue ghIssue,String repositoryName) throws IOException {
+        this.repositoryName=repositoryName;
         htmlUrl=ghIssue.getHtmlUrl().toString();
         createdAt=ghIssue.getCreatedAt();
         updatedAt=ghIssue.getUpdatedAt();
