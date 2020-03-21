@@ -1,0 +1,25 @@
+version: '3'
+services:
+  web:
+
+    build: .
+    ports:
+      - 8080:8080
+    links:
+      - db:gitapi
+    depends_on:
+      - db
+  db:
+    container_name: db
+    restart: always
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=git
+      - POSTGRES_USER=git
+      - POSTGRES_DB=gitapi
+#    ports:
+#      - "5432:5432"
+    network_mode: host
+
+volumes:
+  sample_db: {}

@@ -22,9 +22,6 @@ public class Connector {
     public void connect(String token, String reponame) throws IOException {
         this.reponame=reponame;
         this.token=token;
-        System.out.println(reponame);
-        System.out.println(token);
-
         //token="c12d0ed47b1b71b40db3893b023ed48333826806";
         GitHub gitHub=connect(token);
         ArrayList repositories=getRepositories(gitHub);
@@ -36,9 +33,18 @@ public class Connector {
         setIssues(metrics,repositories);
         setIssueEvents(metrics,repositories);
         System.out.println();
-
     }
-
+    public void connect() throws IOException {
+        GitHub gitHub=connect(token);
+        ArrayList repositories=getRepositories(gitHub);
+        setNumOfRepos(repositories.size());
+        metrics=new Metrics[getNumOfRepos()];
+        initializeMetrics(metrics);
+        setRepoNames(metrics,repositories);
+        setCommits(metrics,repositories);
+        setIssues(metrics,repositories);
+        setIssueEvents(metrics,repositories);
+    }
     @Autowired
     public IssueEventService issueEventService;
 

@@ -28,9 +28,8 @@ public class SpringGithubAgentApplication {
     public static void main(String[] args) throws IOException {
         token=args[0];
         reponame=args[1];
+        System.out.println(args[0]+" 1 "+args[1]);
         SpringApplication.run(SpringGithubAgentApplication.class, args);
-
-        System.out.println(args[0]+" "+args[1]);
     }
 
     @EventListener(ApplicationReadyEvent.class)

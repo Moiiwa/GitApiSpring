@@ -35,3 +35,4 @@ public class Controller {
         return issueEventRepository.findAll();
     }
 }
+
