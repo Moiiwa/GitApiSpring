@@ -10,7 +10,7 @@ import java.io.IOException;
 public class WebHookController{
     @Autowired
     Connector connector;
-    @GetMapping("/webhook")
+    @GetMapping("/webhook/")
     public void updateEverything() throws IOException {
         connector.connect();
     }
