@@ -13,7 +13,7 @@ import java.io.IOException;
 public class WebHookController{
     @Autowired
     Connector connector;
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.POST)
     public void updateEverything() throws IOException {
         connector.connect();
     }

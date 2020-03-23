@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class Connector {
     private static int numOfRepos;
     public Metrics metrics[];
-    String token;
+    protected String token;
 
     String reponame;
     public void connect(String token, String reponame) throws IOException {
