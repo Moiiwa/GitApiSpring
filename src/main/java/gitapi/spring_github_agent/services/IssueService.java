@@ -8,8 +8,21 @@ import org.springframework.stereotype.Service;
 @Service
 public class IssueService {
     @Autowired
-    IssueRepository issueRepository;
+    private IssueRepository issueRepository;
     public void createIssue(Issue issue){
         issueRepository.save(issue);
     }
+
+    public void deleteIssues(){
+        issueRepository.deleteAll();
+    }
+
+    public IssueRepository getIssueRepository(){
+        return issueRepository;
+    }
+
+    public void setIssueRepository(IssueRepository issueRepository) {
+        this.issueRepository = issueRepository;
+    }
 }
+

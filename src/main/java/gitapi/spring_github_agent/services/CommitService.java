@@ -8,10 +8,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class CommitService {
 
     @Autowired
-    private CommitsRepository commitsRepository;
+     private CommitsRepository commitsRepository;
 
 
     public void createCommit(Commit commit){
         commitsRepository.save(commit);
+    }
+
+    public void deleteCommits(){
+        commitsRepository.deleteAll();
+    }
+
+    public CommitsRepository getCommitsRepository(){
+        return commitsRepository;
+    }
+    public void setCommitsRepository(CommitsRepository repository){
+        this.commitsRepository=repository;
     }
 }

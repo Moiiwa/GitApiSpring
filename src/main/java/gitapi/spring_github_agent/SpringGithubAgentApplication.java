@@ -26,15 +26,18 @@ public class SpringGithubAgentApplication {
     static String reponame;
     static String token;
     public static void main(String[] args) throws IOException {
-        token=args[0];
-        reponame=args[1];
-        System.out.println(args[0]+" 1 "+args[1]);
+        token=args[0]; //Comment for testing
+        reponame=args[1]; // and this
+        System.out.println(args[0]+" 1 "+args[1]); // and this
+        //token="251cb1e36448aafa45d2e29766250fe6b5330c1c"; and decomment this
+        //reponame="Customrepo"; and this
         SpringApplication.run(SpringGithubAgentApplication.class, args);
     }
 
     @EventListener(ApplicationReadyEvent.class)
     private void connect() throws IOException {
         connector.connect(token,reponame);
+        //connector.connect("251cb1e36448aafa45d2e29766250fe6b5330c1c","Customrepo");
     }
 
 }

@@ -8,6 +8,7 @@ import gitapi.spring_github_agent.tables.Issueevent;
 import org.kohsuke.github.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,26 +16,38 @@ import java.util.ArrayList;
 @Service
 public class Connector {
     private static int numOfRepos;
-    public Metrics metrics[];
-    protected String token;
+    public static Metrics metrics[];
+    protected static String token;
+    private static boolean tokenOk=true;
+    static String reponame;
+    private GitHub gitHub;
 
-    String reponame;
-    public void connect(String token, String reponame) throws IOException {
-        this.reponame=reponame;
-        this.token=token;
+    public GitHub getGithub(){
+        return gitHub;
+    }
+
+    public  void connect(String token, String reponame) throws IOException {
+
+        Connector.reponame=reponame;
+        Connector.token=token;
         //token="c12d0ed47b1b71b40db3893b023ed48333826806";
-        GitHub gitHub=connect(token);
-        ArrayList repositories=getRepositories(gitHub);
-        setNumOfRepos(repositories.size());
-        metrics=new Metrics[getNumOfRepos()];
-        initializeMetrics(metrics);
-        setRepoNames(metrics,repositories);
-        setCommits(metrics,repositories);
-        setIssues(metrics,repositories);
-        setIssueEvents(metrics,repositories);
-        System.out.println();
+            gitHub = connect(token);
+            ArrayList repositories = getRepositories(gitHub);
+            setNumOfRepos(repositories.size());
+            metrics = new Metrics[getNumOfRepos()];
+            initializeMetrics(metrics);
+            setRepoNames(metrics, repositories);
+            setCommits(metrics, repositories);
+            setIssues(metrics, repositories);
+            setIssueEvents(metrics, repositories);
+            System.out.println();
+
+    }
+    public static boolean returnTokenOk(){
+        return tokenOk;
     }
     public void connect() throws IOException {
+
         GitHub gitHub=connect(token);
         ArrayList repositories=getRepositories(gitHub);
         setNumOfRepos(repositories.size());
@@ -44,15 +57,16 @@ public class Connector {
         setCommits(metrics,repositories);
         setIssues(metrics,repositories);
         setIssueEvents(metrics,repositories);
+
     }
     @Autowired
     public IssueEventService issueEventService;
 
     @Autowired
-    public CommitService commitService;
+    public  CommitService commitService;
 
     @Autowired
-    public IssueService issueService;
+    public  IssueService issueService;
 
     public static void initializeMetrics(Metrics[] metrics){
         for (int i=0;i<getNumOfRepos();i++){
@@ -60,7 +74,7 @@ public class Connector {
         }
     }
 
-    public void setCommits(Metrics[] metrics,ArrayList<GHRepository> repositories) throws IOException {
+    public  void setCommits(Metrics[] metrics,ArrayList<GHRepository> repositories) throws IOException {
         for(int i=0;i<getNumOfRepos();++i) {
             if (metrics[i].getRepositoryName().equals(reponame)) {
                 metrics[i].setCommits(getCommits(repositories.get(i)));
@@ -86,7 +100,7 @@ public class Connector {
         return issues;
     }
 
-    public void setIssueEvents(Metrics[] metrics,ArrayList<GHRepository> repositories) throws IOException {
+    public  void setIssueEvents(Metrics[] metrics,ArrayList<GHRepository> repositories) throws IOException {
         for(int i=0;i<getNumOfRepos();++i) {
             if (metrics[i].getRepositoryName().equals(reponame)) {
                 metrics[i].setIssueEvents(getIssueEvents(repositories.get(i)));
@@ -106,7 +120,7 @@ public class Connector {
         return issues;
     }
 
-    public void setIssues(Metrics[] metrics,ArrayList<GHRepository> repositories) throws IOException {
+    public  void setIssues(Metrics[] metrics,ArrayList<GHRepository> repositories) throws IOException {
         for(int i=0;i<getNumOfRepos();++i) {
             if (metrics[i].getRepositoryName().equals(reponame)) {
                 metrics[i].setIssues(getIssues(repositories.get(i)));

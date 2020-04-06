@@ -8,8 +8,20 @@ import org.springframework.stereotype.Service;
 @Service
 public class IssueEventService {
     @Autowired
-    public IssueEventRepository issueEventRepository;
+    private IssueEventRepository issueEventRepository;
     public void createIssueEvent(Issueevent issueEvent){
         issueEventRepository.save(issueEvent);
+    }
+
+    public IssueEventRepository getIssueEventRepository(){
+        return issueEventRepository;
+    }
+
+    public void deleteIssueEvents(){
+        issueEventRepository.deleteAll();
+    }
+
+    public void setIssueEventRepository(IssueEventRepository issueEventRepository) {
+        this.issueEventRepository = issueEventRepository;
     }
 }
