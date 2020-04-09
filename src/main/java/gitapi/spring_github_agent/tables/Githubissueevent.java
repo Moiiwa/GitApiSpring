@@ -12,7 +12,7 @@ import java.util.Date;
 @EnableAutoConfiguration
 @Entity
 @Table
-public class Issueevent {
+public class Githubissueevent {
     @Column
     public String repositoryName;
     @Id
@@ -27,7 +27,7 @@ public class Issueevent {
     @Column
     public String issueHtml;
 
-    public Issueevent(GHIssueEvent event,String repositoryName){
+    public Githubissueevent(GHIssueEvent event, String repositoryName){
         this.repositoryName=repositoryName;
         this.id=event.getId();
         createdAt=event.getCreatedAt();
@@ -35,5 +35,5 @@ public class Issueevent {
         userLogin=event.getActor().getLogin();
         issueHtml=event.getIssue().getHtmlUrl().toString();
     }
-    public Issueevent(){}
+    public Githubissueevent(){}
 }

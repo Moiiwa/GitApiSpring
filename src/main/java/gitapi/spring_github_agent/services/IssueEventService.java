@@ -1,7 +1,7 @@
 package gitapi.spring_github_agent.services;
 
 import gitapi.spring_github_agent.repositories.IssueEventRepository;
-import gitapi.spring_github_agent.tables.Issueevent;
+import gitapi.spring_github_agent.tables.Githubissueevent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 public class IssueEventService {
     @Autowired
     private IssueEventRepository issueEventRepository;
-    public void createIssueEvent(Issueevent issueEvent){
+    public void createIssueEvent(Githubissueevent issueEvent){
         issueEventRepository.save(issueEvent);
     }
 

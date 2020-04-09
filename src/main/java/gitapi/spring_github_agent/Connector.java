@@ -2,13 +2,12 @@ package gitapi.spring_github_agent;
 import gitapi.spring_github_agent.services.CommitService;
 import gitapi.spring_github_agent.services.IssueEventService;
 import gitapi.spring_github_agent.services.IssueService;
-import gitapi.spring_github_agent.tables.Commit;
-import gitapi.spring_github_agent.tables.Issue;
-import gitapi.spring_github_agent.tables.Issueevent;
+import gitapi.spring_github_agent.tables.Githubcommit;
+import gitapi.spring_github_agent.tables.Githubissue;
+import gitapi.spring_github_agent.tables.Githubissueevent;
 import org.kohsuke.github.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -80,7 +79,7 @@ public class Connector {
                 metrics[i].setCommits(getCommits(repositories.get(i)));
                 for (int j = 0; j < metrics[i].getCommits().size(); j++) {
 
-                    Commit commit = new Commit(metrics[i].getCommit(j), reponame);
+                    Githubcommit commit = new Githubcommit(metrics[i].getCommit(j), reponame);
                     commitService.createCommit(commit);
                 }
             }
@@ -106,7 +105,7 @@ public class Connector {
                 metrics[i].setIssueEvents(getIssueEvents(repositories.get(i)));
                 for (int j = 0; j < getIssueEvents(repositories.get(i)).size(); j++) {
                     GHIssueEvent ghIssueEvent = (GHIssueEvent) getIssueEvents(repositories.get(i)).get(j);
-                    Issueevent issueevent = new Issueevent(ghIssueEvent,reponame);
+                    Githubissueevent issueevent = new Githubissueevent(ghIssueEvent,reponame);
                     issueEventService.createIssueEvent(issueevent);
                 }
             }
@@ -126,7 +125,7 @@ public class Connector {
                 metrics[i].setIssues(getIssues(repositories.get(i)));
                 for (int j = 0; j < getIssues(repositories.get(i)).size(); j++) {
                     GHIssue ghIssue = (GHIssue) getIssues(repositories.get(i)).get(j);
-                    Issue issue = new Issue(ghIssue, reponame);
+                    Githubissue issue = new Githubissue(ghIssue, reponame);
                     issueService.createIssue(issue);
 
                 }

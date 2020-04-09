@@ -1,7 +1,7 @@
 package gitapi.spring_github_agent.services;
 
 import gitapi.spring_github_agent.repositories.IssueRepository;
-import gitapi.spring_github_agent.tables.Issue;
+import gitapi.spring_github_agent.tables.Githubissue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 public class IssueService {
     @Autowired
     private IssueRepository issueRepository;
-    public void createIssue(Issue issue){
+    public void createIssue(Githubissue issue){
         issueRepository.save(issue);
     }
 

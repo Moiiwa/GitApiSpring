@@ -10,7 +10,7 @@ import java.util.List;
 @EnableAutoConfiguration
 @Entity
 @Table
-public class Commit {
+public class Githubcommit {
     @Column
     public String repositoryName;
     @Column
@@ -27,7 +27,7 @@ public class Commit {
     @Column
     public String parent2;
 
-    public Commit(GHCommit commit,String repositoryName) throws IOException {
+    public Githubcommit(GHCommit commit,String repositoryName) throws IOException {
         this.repositoryName=repositoryName;
         GHCommit.ShortInfo shortInfo=commit.getCommitShortInfo();
         date=commit.getCommitShortInfo().getCommitDate();
@@ -36,17 +36,17 @@ public class Commit {
         html_url=commit.getHtmlUrl().toString();
         List<GHCommit> parents=commit.getParents();
         if(parents.size()==1){
-            Commit parent=new Commit(parents.get(0),repositoryName);
+            Githubcommit parent=new Githubcommit(parents.get(0),repositoryName);
             parent1=parent.html_url;
         }
         if(parents.size()==2){
-            Commit parent1=new Commit(parents.get(0),repositoryName);
+            Githubcommit parent1=new Githubcommit(parents.get(0),repositoryName);
             this.parent1=parent1.html_url;
-            Commit parent2=new Commit(parents.get(1),repositoryName);
+            Githubcommit parent2=new Githubcommit(parents.get(1),repositoryName);
             this.parent2=parent2.html_url;
         }
     }
-    public Commit(){
+    public Githubcommit(){
 
     }
 }

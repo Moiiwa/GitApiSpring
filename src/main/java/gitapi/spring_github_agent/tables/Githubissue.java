@@ -13,7 +13,7 @@ import java.util.Date;
 @EnableAutoConfiguration
 @Entity
 @Table
-public class Issue
+public class Githubissue
 {
     @Column
     public String repositoryName;
@@ -33,7 +33,7 @@ public class Issue
     public Date createdAt;
     @Column
     public Date updatedAt;
-    public Issue(GHIssue ghIssue,String repositoryName) throws IOException {
+    public Githubissue(GHIssue ghIssue, String repositoryName) throws IOException {
         this.repositoryName=repositoryName;
         htmlUrl=ghIssue.getHtmlUrl().toString();
         createdAt=ghIssue.getCreatedAt();
@@ -45,5 +45,5 @@ public class Issue
         if(ghIssue.getAssignee()!=null)
         assignee=ghIssue.getAssignee().getEmail();
     }
-    public Issue(){}
+    public Githubissue(){}
 }
