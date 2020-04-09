@@ -106,6 +106,27 @@ class SpringGithubAgentApplicationTests {
         else
             assert false;
     }
+    @Test
+    void newRepository() throws IOException {
+        Connector connector=new Connector();
+        connector.issueEventService=new IssueEventService();
+        connector.issueService=new IssueService();
+        connector.commitService=new CommitService();
+        connector.issueEventService.setIssueEventRepository(issueEventRepository);
+        connector.issueService.setIssueRepository(issueRepository);
+        connector.commitService.setCommitsRepository(commitsRepository);
+        connector.connect("251cb1e36448aafa45d2e29766250fe6b5330c1c","GitApiSpring");
+        int oldnumber=Connector.getNumOfRepos();
+        GitHub gitHub=connector.getGithub();
+        gitHub.createRepository("testRepo").create();
+        connector.connect("251cb1e36448aafa45d2e29766250fe6b5330c1c","GitApiSpring");
+        int newnumber=Connector.getNumOfRepos();
+        if(newnumber==oldnumber+1)
+            assert true;
+        else
+            assert false;
+    }
+
 
     @Test
     void newCommit() throws IOException {
