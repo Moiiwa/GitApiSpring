@@ -6,22 +6,27 @@ import gitapi.spring_github_agent.repositories.IssueRepository;
 import gitapi.spring_github_agent.tables.Githubcommit;
 import gitapi.spring_github_agent.tables.Githubissue;
 import gitapi.spring_github_agent.tables.Githubissueevent;
+import jdk.internal.jline.internal.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.io.IOException;
 import java.util.List;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 @RestController
 public class Controller {
+
+    private static Logger LOG;
     @Autowired
     Connector connector;
-    @PostMapping("/github")
+    @PostMapping("/")
     public void fetchProject(@RequestParam(name = "auth_token") String authToken, @RequestParam(name = "repo_name", required = true) String repoName) throws IOException {
         connector.connect(authToken, repoName);
+        LOG=LogManager.getLogger(SpringGithubAgentApplication.class);
+        LOG.warn("Connection was successfully established!");
     }
 
     @Autowired
@@ -30,17 +35,17 @@ public class Controller {
     private IssueRepository issueRepository;
     @Autowired
     private IssueEventRepository issueEventRepository;
-    @GetMapping("/github/commits")
+    @GetMapping("/commits")
     public List<Githubcommit> allCommits() {
             return commitsRepository.findAllAuthors();
     }
 
-    @GetMapping("/github/issues")
+    @GetMapping("/issues")
     public List<Githubissue> allIssues(){
         return issueRepository.findAll();
     }
 
-    @GetMapping("/github/issueEvents")
+    @GetMapping("/issueEvents")
     public List<Githubissueevent> allIssueEvents(){
         return issueEventRepository.findAll();
     }
