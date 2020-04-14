@@ -6,7 +6,6 @@ import gitapi.spring_github_agent.repositories.IssueRepository;
 import gitapi.spring_github_agent.tables.Githubcommit;
 import gitapi.spring_github_agent.tables.Githubissue;
 import gitapi.spring_github_agent.tables.Githubissueevent;
-import jdk.internal.jline.internal.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
