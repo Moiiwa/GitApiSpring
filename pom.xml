@@ -70,7 +70,12 @@
       <groupId>junit</groupId>  
       <artifactId>junit</artifactId>  
       <scope>test</scope> 
-    </dependency> 
+    </dependency>
+    <dependency>
+      <groupId>com.microsoft.sqlserver</groupId>
+      <artifactId>mssql-jdbc</artifactId>
+      <version>8.3.0.jre11-preview</version>
+    </dependency>
   </dependencies>  
   <build> 
     <plugins> 
