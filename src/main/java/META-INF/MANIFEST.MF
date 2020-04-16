@@ -1,0 +1,33 @@
+Manifest-Version: 1.0
+Main-Class: gitapi.spring_github_agent.SpringGithubAgentApplication
+Class-Path: log4j-to-slf4j-2.12.1.jar spring-boot-starter-2.2.4.RELEASE.
+ jar hibernate-core-5.4.10.Final.jar jakarta.activation-api-1.2.1.jar Fa
+ stInfoset-1.2.16.jar hibernate-commons-annotations-5.1.0.Final.jar java
+ ssist-3.24.0-GA.jar slf4j-api-1.7.30.jar spring-boot-starter-jdbc-2.2.4
+ .RELEASE.jar tomcat-embed-websocket-9.0.30.jar jackson-databind-2.10.2.
+ jar spring-boot-starter-validation-2.2.4.RELEASE.jar jul-to-slf4j-1.7.3
+ 0.jar spring-webmvc-5.2.3.RELEASE.jar spring-boot-starter-json-2.2.4.RE
+ LEASE.jar tomcat-embed-core-9.0.30.jar hibernate-validator-6.0.18.Final
+ .jar stax-ex-1.8.1.jar snakeyaml-1.25.jar spring-tx-5.2.3.RELEASE.jar i
+ stack-commons-runtime-3.0.8.jar antlr-2.7.7.jar jackson-module-paramete
+ r-names-2.10.2.jar jaxb-runtime-2.3.2.jar spring-boot-starter-web-2.2.4
+ .RELEASE.jar byte-buddy-1.10.6.jar commons-lang3-3.9.jar jboss-logging-
+ 3.4.1.Final.jar spring-boot-starter-data-jpa-2.2.4.RELEASE.jar spring-w
+ eb-5.2.3.RELEASE.jar jakarta.xml.bind-api-2.3.2.jar HikariCP-3.4.2.jar 
+ jakarta.annotation-api-1.3.5.jar spring-orm-5.2.3.RELEASE.jar spring-as
+ pects-5.2.3.RELEASE.jar spring-boot-autoconfigure-2.2.4.RELEASE.jar spr
+ ing-core-5.2.3.RELEASE.jar log4j-api-2.12.1.jar classmate-1.5.1.jar spr
+ ing-beans-5.2.3.RELEASE.jar jackson-datatype-jdk8-2.10.2.jar postgresql
+ -42.2.9.jar spring-aop-5.2.3.RELEASE.jar txw2-2.3.2.jar spring-context-
+ 5.2.3.RELEASE.jar spring-jcl-5.2.3.RELEASE.jar spring-boot-starter-aop-
+ 2.2.4.RELEASE.jar spring-boot-starter-logging-2.2.4.RELEASE.jar github-
+ api-1.106.jar spring-boot-starter-tomcat-2.2.4.RELEASE.jar spring-data-
+ commons-2.2.4.RELEASE.jar jackson-core-2.10.2.jar commons-io-2.4.jar do
+ m4j-2.1.1.jar jakarta.persistence-api-2.2.3.jar jakarta.validation-api-
+ 2.0.2.jar jackson-datatype-jsr310-2.10.2.jar spring-data-jpa-2.2.4.RELE
+ ASE.jar jandex-2.1.1.Final.jar tomcat-embed-el-9.0.30.jar spring-jdbc-5
+ .2.3.RELEASE.jar logback-classic-1.2.3.jar aspectjweaver-1.9.5.jar jack
+ son-annotations-2.10.2.jar jakarta.transaction-api-1.3.3.jar spring-exp
+ ression-5.2.3.RELEASE.jar logback-core-1.2.3.jar lombok-1.18.10.jar spr
+ ing-boot-2.2.4.RELEASE.jar
+
