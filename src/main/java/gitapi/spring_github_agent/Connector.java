@@ -45,6 +45,12 @@ public class Connector {
     public static boolean returnTokenOk(){
         return tokenOk;
     }
+    public String getToken(){
+        return token;
+    }
+    public String getReponame(){
+        return reponame;
+    }
     public void connect() throws IOException {
 
         GitHub gitHub=connect(token);
