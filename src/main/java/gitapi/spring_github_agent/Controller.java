@@ -24,14 +24,23 @@ public class Controller {
     @Autowired
     Connector connector;
     @PostMapping("/")
-    public void fetchProject(@RequestParam(name = "auth_token") String authToken, @RequestParam(name = "repo_name", required = true) String repoName) throws IOException {
-        connector.connect(authToken, repoName);
+    public List connect(@RequestParam(name = "auth_token") String authToken) throws Exception {
+        connector.connect(authToken);
         LOG=LogManager.getLogger(SpringGithubAgentApplication.class);
         LOG.warn("Connection was successfully established!");
+        return connector.reponames;
+    }
+
+
+    @PostMapping("/fetchdata")
+    public void fetchDataForRepository(@RequestParam(name = "repo_name", required = true) String repoName) throws IOException {
+        connector.ChooseRep(repoName);
+        LOG.warn("Data is prepared");
     }
     @PostMapping("/webhook")
-    public RedirectView webhook() throws IOException {
-        connector.connect(connector.getToken(),connector.getReponame());
+    public RedirectView webhook() throws Exception {
+        connector.ChooseRep(connector.getReponame());
+        LOG.warn("Data is prepared");
         return new RedirectView("/");
     }
     @Autowired

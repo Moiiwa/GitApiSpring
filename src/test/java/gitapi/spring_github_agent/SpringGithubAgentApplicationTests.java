@@ -32,7 +32,7 @@ class SpringGithubAgentApplicationTests {
     private IssueEventRepository issueEventRepository;
 
     //@Test()
-    void validToken() throws IOException {
+    void validToken() throws Exception {
         Connector connector=new Connector();
         connector.issueEventService=new IssueEventService();
         connector.issueService=new IssueService();
@@ -107,7 +107,7 @@ class SpringGithubAgentApplicationTests {
             assert false;
     }
     //@Test
-    void newRepository() throws IOException {
+    void newRepository() throws Exception {
         Connector connector=new Connector();
         connector.issueEventService=new IssueEventService();
         connector.issueService=new IssueService();
@@ -129,7 +129,7 @@ class SpringGithubAgentApplicationTests {
 
 
     //@Test
-    void newCommit() throws IOException {
+    void newCommit() throws Exception {
         Connector connector=new Connector();
         connector.issueEventService=new IssueEventService();
         connector.issueService=new IssueService();

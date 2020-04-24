@@ -1,4 +1,5 @@
 package gitapi.spring_github_agent;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import gitapi.spring_github_agent.services.CommitService;
 import gitapi.spring_github_agent.services.IssueEventService;
 import gitapi.spring_github_agent.services.IssueService;
@@ -9,8 +10,20 @@ import org.kohsuke.github.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.awt.*;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.Inet4Address;
+import java.net.URI;
+import java.net.URL;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.ArrayList;
+import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.List;
 
 @Service
 public class Connector {
@@ -20,28 +33,73 @@ public class Connector {
     private static boolean tokenOk=true;
     static String reponame;
     private GitHub gitHub;
-
+    ArrayList<GHRepository> repositories;
+    public ArrayList reponames;
     public GitHub getGithub(){
         return gitHub;
     }
+    private GHHook ghHook;
+    List hooksList;
+    String url;
+    String ip;
+    public  void connect(String token) throws Exception {
+        commitService.deleteCommits();
+        issueService.deleteIssues();
+        issueEventService.deleteIssueEvents();
 
-    public  void connect(String token, String reponame) throws IOException {
+        URL whatismyip = new URL("http://checkip.amazonaws.com");
+        BufferedReader in = new BufferedReader(new InputStreamReader(
+                whatismyip.openStream()));
+        ip=in.readLine();
 
-        Connector.reponame=reponame;
         Connector.token=token;
         //token="c12d0ed47b1b71b40db3893b023ed48333826806";
-            gitHub = connect(token);
-            ArrayList repositories = getRepositories(gitHub);
+            gitHub = connectWT(token);
+            repositories = getRepositories(gitHub);
+            reponames=new ArrayList();
             setNumOfRepos(repositories.size());
-            metrics = new Metrics[getNumOfRepos()];
-            initializeMetrics(metrics);
-            setRepoNames(metrics, repositories);
-            setCommits(metrics, repositories);
-            setIssues(metrics, repositories);
-            setIssueEvents(metrics, repositories);
-            System.out.println();
+            for (int i=0;i<numOfRepos;i++){
+                GHRepository rep=repositories.get(i);
+                RepoInfo repoInfo=new RepoInfo();
+                repoInfo.setName(rep.getName());
+                repoInfo.setPath(rep.getUrl().toString());
+                repoInfo.setToken(token);
+                reponames.add(repoInfo);
+            }
 
     }
+    public void ChooseRep(String reponame) throws IOException {
+        metrics = new Metrics[getNumOfRepos()];
+        Connector.reponame=reponame;
+        initializeMetrics(metrics);
+        setRepoNames(metrics, repositories);
+        setCommits(metrics, repositories);
+        setIssues(metrics, repositories);
+        setIssueEvents(metrics, repositories);
+        System.out.println();
+        GHRepository repository =getRepo();
+        HashMap<String,String> config=new HashMap<>();
+        config.put("private_token",token);
+        config.put("insecure_ssl","1");
+        url=new URL("http://"+ip+":9095/webhook").toExternalForm();
+        config.put("url",url);
+        config.put("push_events","true");
+        config.put("issues_events","true");
+        EnumSet<GHEvent> HOOK_EVENTS = EnumSet.of(GHEvent.PUSH,GHEvent.ISSUES);
+        hooksList =  repository.getHooks();
+        if(hooksList.size()==0||!hookExists())
+            ghHook=repository.createHook("web",config,HOOK_EVENTS,true);
+    }
+    public boolean hookExists(){
+        for (int i=0;i<hooksList.size();i++){
+            GHHook hook= (GHHook) hooksList.get(i);
+            if(hook.getConfig().containsValue(url)==true){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static boolean returnTokenOk(){
         return tokenOk;
     }
@@ -53,7 +111,7 @@ public class Connector {
     }
     public void connect() throws IOException {
 
-        GitHub gitHub=connect(token);
+        GitHub gitHub=connectWT(token);
         ArrayList repositories=getRepositories(gitHub);
         setNumOfRepos(repositories.size());
         metrics=new Metrics[getNumOfRepos()];
@@ -63,6 +121,14 @@ public class Connector {
         setIssues(metrics,repositories);
         setIssueEvents(metrics,repositories);
 
+    }
+    public GHRepository getRepo(){
+        for (int i=0;i<getNumOfRepos();i++){
+            GHRepository repository= (GHRepository) repositories.get(i);
+            if(repository.getName().equals(reponame))
+                return repository;
+        }
+        return null;
     }
     @Autowired
     public IssueEventService issueEventService;
@@ -152,7 +218,7 @@ public class Connector {
         numOfRepos = num;
     }
 
-    public static GitHub connect(String token) {
+    public static GitHub connectWT(String token) {
         GitHub gitHub= null;
         try {
             gitHub = new GitHubBuilder().withOAuthToken(token).build();

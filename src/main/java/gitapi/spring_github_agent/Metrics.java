@@ -17,7 +17,9 @@ public class Metrics {
     private String repositoryName;
     private ArrayList<GHIssue> issues;
     private ArrayList<GHIssueEvent> issueEvents;
-
+    public GHRepository getRepository(){
+        return repository;
+    }
     public void setIssueEvents(ArrayList<GHIssueEvent> issueEvents) {
         this.issueEvents = issueEvents;
     }

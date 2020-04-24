@@ -42,8 +42,9 @@ public class Githubissue
         body=ghIssue.getBody();
         closedAt=ghIssue.getClosedAt();
         state=ghIssue.getState().toString();
-        if(ghIssue.getAssignee()!=null)
-        assignee=ghIssue.getAssignee().getEmail();
+
+        if(ghIssue.getUser()!=null)
+        assignee=ghIssue.getUser().getEmail();
     }
     public Githubissue(){}
 }
