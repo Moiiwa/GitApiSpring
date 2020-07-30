@@ -53,7 +53,6 @@ public class Connector {
         ip=in.readLine();
 
         Connector.token=token;
-        //token="c12d0ed47b1b71b40db3893b023ed48333826806";
             gitHub = connectWT(token);
             repositories = getRepositories(gitHub);
             reponames=new ArrayList();
